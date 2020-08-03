@@ -18,6 +18,19 @@ namespace ToDo_App.Controllers
         {
             _context = context;
         }
+        public async Task<IActionResult> OnPost([Bind("id,taskName,isCompleted")] TodoItem todoItem)
+        {
+            if (ModelState.IsValid)
+            {
+                _context.Add(todoItem);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
+            else
+            {
+                return View(todoItem);
+            }
+        }
 
         // GET: TodoItems
         public async Task<IActionResult> Index()
